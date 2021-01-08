@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  
+  <div id="app">
+    <div class="todo">
+      <h1 class="todo__title">План по изучению Vue.js</h1>
+      <!-- info -->
+
+      <ul class="todo__list" :class="{'todo__list--done': todoDone}">
+        <li class="todo__item"
+          v-for="(item, index) in steps"
+          @click="activeIndex = index"
+          :class="{
+            'todo__item--active': index == activeIndex,
+            'todo__item--done': index < activeIndex}">
+          {{ item.title }}
+        </li>
+      </ul>
+      <!-- steps -->
+      
+      <p class="todo__desc">{{ stepDescription }}</p>
+      <!-- decription -->
+
+      <div class="todo__buttons">
+        <button class="todo__button todo__button--prev"
+          v-if="!todoDone"
+          :disabled="activeIndex == 0"  
+          @click="activeIndex--">Назад</button>
+        <button class="todo__button todo__button--nextOrFinish"
+          v-if="!todoDone"
+          @click="nextStepOrFinish()">{{ activeIndex < steps.length-1 ? 'Дальше' : 'Завершить'}}</button>
+        <button class="todo__button"
+          v-if="todoDone"
+          @click="reset()">Начать сначала</button>
+      </div>
+      <!-- buttons -->
+    </div>
+  </div>
+  <!-- app -->
+
+  <script src="https://unpkg.com/vue@next"></script>
+  <script src="app.js"></script>
+  <!-- scripts -->
+
+</body>
+</html>
