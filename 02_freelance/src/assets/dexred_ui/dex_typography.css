@@ -1,0 +1,167 @@
+/* Typography */
+
+h1 { --font-size: 2.7em; font-size: var(--font-size) }
+h2 { --font-size: 2.5em; font-size: var(--font-size) }
+h3 { --font-size: 1.7em; font-size: var(--font-size) }
+h4 { --font-size: 1.4em; font-size: var(--font-size) }
+h5 { --font-size: 1.2em; font-size: var(--font-size) }
+h6 { --font-size: 1.1em; font-size: var(--font-size) }
+
+h1, h2, h3, h4, h5, h6 {
+  position: relative;
+  width: fit-content;
+
+  margin: 0.5em 0 0.65em;
+  padding-bottom: 6px;
+  
+  font-weight: 600;
+  letter-spacing: .015em;
+}
+
+h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {
+  cursor: pointer;
+}
+
+h1[id]::after, h2[id]::after, h3[id]::after,
+h4[id]::after, h5[id]::after, h6[id]::after {
+  content: ' #';
+
+  display: inline-block;
+  width: 0px;
+
+  opacity: 0.075;
+  transition: .2s;
+}
+
+h1[id]:hover::after, h2[id]:hover::after, h3[id]:hover::after,
+h4[id]:hover::after, h5[id]:hover::after, h6[id]:hover::after {
+  content: ' #';
+
+  display: inline-block;
+  width: 0px;
+
+  opacity: 0.5;
+}
+
+.typography p, .typography blockquote, .typography li,
+p.typography, blockquote.typography, li.typography {
+  --font-size: 1.1em;
+
+  margin-left: 3px;
+
+  font-size: var(--font-size);
+  line-height: 155%;
+  letter-spacing: .055em;
+}
+
+.typography p + p,
+p.typography + p {
+  margin-top: 1em;
+}
+
+.typography p + h1, .typography p + h2, .typography p + h3,
+p.typography + h1, p.typography + h2, p.typography + h3 {
+  margin: 2em 0 0.85em;
+}
+
+.typography p + h4, .typography p + h5, .typography p + h6,
+p.typography + h4, p.typography + h5, p.typography + h6 {
+  margin: 1.8em 0 0.85em;
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: none;
+  text-shadow: 0px 0px .3px;
+}
+
+.typography a,
+a.typography {
+  box-shadow: 0px 2px 0px currentColor;
+}
+
+.typography a:hover,
+a.typography:hover {
+  color: var(--link-hover-color);
+}
+
+.typography a:visited,
+a.typography:visited
+{
+  color: var(--link-visible-color);
+  text-shadow: 0px 0px .6px;
+}
+
+.typography ul,
+ul.typography {
+  padding-left: 2.5em;
+  margin: 2em 0;
+}
+
+.typography li + li,
+ul.typography li + li {
+  margin-top: 0.8em;
+}
+
+.typography blockquote,
+blockquote.typography {
+  padding: 2.5em;
+  margin: 2em 0;
+  
+  position: relative;
+
+  font-style: italic;
+  font-weight: 500;
+  color: #404f7b;
+  
+  background: #f7f7f7;
+}
+
+.typography blockquote::before,
+blockquote.typography::before {
+  content: '«';
+  top: var(--margin);
+  left: var(--margin);
+}
+
+.typography blockquote::after,
+blockquote.typography::after {
+  content: '»';
+  right: var(--margin);
+  bottom: var(--margin);
+}
+
+.typography blockquote::before, .typography blockquote::after,
+blockquote.typography::before, blockquote.typography::after {
+  --margin: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+
+  font-size: 175%;
+  opacity: 0.3;
+}
+
+.typography pre,
+.typography pre {
+  overflow-y: auto;
+  margin: 2em 0;
+}
+
+.typography code,
+.typography code {
+  display: inline-block;
+
+  padding: 1.6em;
+
+  font-family: monospace;
+  font-size: 1.4em;
+  line-height: 150%;
+  letter-spacing: 0.05em;
+  color: #404f7b;
+  
+  background: #f7f7f7;
+}

@@ -1,0 +1,116 @@
+/* ------------------------------------------------
+  🐱‍👤 github: https://github.com/Deemoguse/dexgrid –– ля пака шо нема (( 
+  📧 email: cugune.tyan@gmail.com
+
+  😘- by Ruslan Radionov
+  🌻- License MIT
+-------------------------------------------------*/
+
+/* Imports */
+
+@import url('./dex_reset.css');
+@import url('./dex_typography.css');
+
+/* root */
+
+:root {
+  /* colors */
+  --dark-color: #383838;
+  --primery-color: #26a85c;
+  --danger-color: #ca2f51;
+  --warning-color: #f0a12c;
+  --link-color: #2259ff;
+  --link-hover-color: #4e9bff;
+  --link-visible-color: #6811cc;
+  /* units */
+  --unit-padding: 10px;
+  --unit-margin: 10px
+}
+
+/* Containers */
+
+.main-wrapper {
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1194px;
+  padding: 0 50px;
+  margin: 0 auto;
+}
+
+.fixed { position: fixed }
+.top { top: 0 }
+.right { right: 0 }
+.bottom { bottom: 0 }
+.left { left: 0 }
+
+/* padding */
+.p-1 { padding: calc(var(--unit-padding) * 1) }
+.p-2 { padding: calc(var(--unit-padding) * 2) }
+.p-3 { padding: calc(var(--unit-padding) * 3) }
+.p-4 { padding: calc(var(--unit-padding) * 4) }
+.p-5 { padding: calc(var(--unit-padding) * 5) }
+/* top */
+.pt-1 { padding-top: calc(var(--unit-padding) * 1) }
+.pt-2 { padding-top: calc(var(--unit-padding) * 2) }
+.pt-3 { padding-top: calc(var(--unit-padding) * 3) }
+.pt-4 { padding-top: calc(var(--unit-padding) * 4) }
+.pt-5 { padding-top: calc(var(--unit-padding) * 5) }
+/* right */
+.pr-1 { padding-right: calc(var(--unit-padding) * 1) }
+.pr-2 { padding-right: calc(var(--unit-padding) * 2) }
+.pr-3 { padding-right: calc(var(--unit-padding) * 3) }
+.pr-4 { padding-right: calc(var(--unit-padding) * 4) }
+.pr-5 { padding-right: calc(var(--unit-padding) * 5) }
+/* bottom */
+.pb-1 { padding-bottom: calc(var(--unit-padding) * 1) }
+.pb-2 { padding-bottom: calc(var(--unit-padding) * 2) }
+.pb-3 { padding-bottom: calc(var(--unit-padding) * 3) }
+.pb-4 { padding-bottom: calc(var(--unit-padding) * 4) }
+.pb-5 { padding-bottom: calc(var(--unit-padding) * 5) }
+/* left */
+.pl-1 { padding-left: calc(var(--unit-padding) * 1) }
+.pl-2 { padding-left: calc(var(--unit-padding) * 2) }
+.pl-3 { padding-left: calc(var(--unit-padding) * 3) }
+.pl-4 { padding-left: calc(var(--unit-padding) * 4) }
+.pl-5 { padding-left: calc(var(--unit-padding) * 5) }
+
+/* padding */
+.m-1 { margin: calc(var(--unit-margin) * 1) }
+.m-2 { margin: calc(var(--unit-margin) * 2) }
+.m-3 { margin: calc(var(--unit-margin) * 3) }
+.m-4 { margin: calc(var(--unit-margin) * 4) }
+.m-5 { margin: calc(var(--unit-margin) * 5) }
+/* top */
+.mt-1 { margin-top: calc(var(--unit-margin) * 1) }
+.mt-2 { margin-top: calc(var(--unit-margin) * 2) }
+.mt-3 { margin-top: calc(var(--unit-margin) * 3) }
+.mt-4 { margin-top: calc(var(--unit-margin) * 4) }
+.mt-5 { margin-top: calc(var(--unit-margin) * 5) }
+/* right */
+.mr-1 { margin-right: calc(var(--unit-margin) * 1) }
+.mr-2 { margin-right: calc(var(--unit-margin) * 2) }
+.mr-3 { margin-right: calc(var(--unit-margin) * 3) }
+.mr-4 { margin-right: calc(var(--unit-margin) * 4) }
+.mr-5 { margin-right: calc(var(--unit-margin) * 5) }
+/* bottom */
+.mb-1 { margin-bottom: calc(var(--unit-margin) * 1) }
+.mb-2 { margin-bottom: calc(var(--unit-margin) * 2) }
+.mb-3 { margin-bottom: calc(var(--unit-margin) * 3) }
+.mb-4 { margin-bottom: calc(var(--unit-margin) * 4) }
+.mb-5 { margin-bottom: calc(var(--unit-margin) * 5) }
+/* left */
+.ml-1 { margin-left: calc(var(--unit-margin) * 1) }
+.ml-2 { margin-left: calc(var(--unit-margin) * 2) }
+.ml-3 { margin-left: calc(var(--unit-margin) * 3) }
+.ml-4 { margin-left: calc(var(--unit-margin) * 4) }
+.ml-5 { margin-left: calc(var(--unit-margin) * 5) }
+
+/* ------------------------------------------------
+  🐱‍👤 github: https://github.com/Deemoguse/dexgrid –– ля пака шо нема (( 
+  📧 email: cugune.tyan@gmail.com
+
+  😘- by Ruslan Radionov
+  🌻- License MIT
+-------------------------------------------------*/
