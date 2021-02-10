@@ -2,31 +2,29 @@
 
 .card.p-3
   .card__header.pb-2.mb-3
-    h2.card__title(:class="statusClass") {{ title }}
-    app-task-status(:status-title="statusTitle" :status-class="statusClass")
+    h2.card__title(:class="status") {{ title }}
+    app-task-status(:status="status")
   .card__body.typography.mb-3
-    p {{ description.slice(0, 250) }}
+    p {{ description.slice(0, 200) }}
       span.moreinfo(
-        v-if="description.length > 249"
-        @click=""
+        v-if="description.length > 199"
+        @click="$router.push(`/task/${id}`)"
       ) ...
   .card__footer
-    button.card__button(@click="$router.push('/task')") 🧐 Просмотреть подробности
+    button.card__button(@click="$router.push(`/task/${id}`)") 🧐 Просмотреть подробности
 
 //- end line
 </template>
 
 <script>
 import { toRefs } from 'vue'
-import { useGetStatus } from '../use/getTaskStatus'
 import AppTaskStatus from './AppTaskStatus'
 
 export default {
   props: { taskData: Object },
   setup (props) {
-    const { statusClass, statusTitle } = useGetStatus(props.taskData.status)
     const refs = toRefs(props.taskData)
-    return { ...refs, statusClass, statusTitle }
+    return { ...refs }
   },
   components: { AppTaskStatus }
 }
@@ -68,6 +66,9 @@ export default {
       &.cancelled {
         --border-color: var(--danger-color);
       }
+      &.archive {
+        --border-color: var(--dark-color)
+      }
     }
 
     &__deadline {
@@ -93,10 +94,7 @@ export default {
 
     .moreinfo {
       margin-left: 4px;
-
-      font-size: 115%;
-      font-weight: bold;
-      color: var(--link-color);
+      color: #9e9e9e;
 
       cursor: pointer;
 

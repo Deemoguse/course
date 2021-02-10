@@ -17,8 +17,9 @@ const routes = [
     visible: true
   },
   {
-    path: '/task/:id?',
-    component: PageTask
+    path: '/task/:id',
+    component: PageTask,
+    props: (route) => ({ query: route.query.id })
   }
 ]
 

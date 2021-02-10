@@ -1,7 +1,7 @@
 <template lang="pug">
 
 //- main wrapper
-.main-wrapper
+.main-wrapper.pb-4
 
   //- header
   the-header
@@ -13,11 +13,19 @@
 </template>
 
 <script>
+import { useStore } from 'vuex'
 import TheHeader from './components/TheHeader'
 
 export default {
-  components: {
-    TheHeader
+  components: { TheHeader },
+  setup () {
+    const store = useStore()
+
+    if (localStorage.tasksStore) {
+      const tasksStore = JSON.parse(localStorage.tasksStore)
+      store.state.tasks = tasksStore.tasksList
+      store.state.archive = tasksStore.archiveList
+    }
   }
 }
 </script>

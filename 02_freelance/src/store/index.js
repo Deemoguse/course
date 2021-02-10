@@ -1,21 +1,19 @@
 import { createStore } from 'vuex'
-import router from '../router/'
 
 export default createStore({
   state () {
     return {
       staticData: {
-        routerLinks: router.options.routes.filter(link => link.visible),
         statusList: [
-          { alias: 'pending', title: 'В очереди', class: 'pending' },
-          { alias: 'active', title: 'В работе', class: 'active' },
-          { alias: 'done', title: 'Выполненно', class: 'done' },
-          { alias: 'cancelled', title: 'Отмененно', class: 'cancelled' }
+          { alias: 'pending', title: 'В очереди' },
+          { alias: 'active', title: 'В работе' },
+          { alias: 'done', title: 'Выполненно' },
+          { alias: 'cancelled', title: 'Отмененно' },
+          { alias: 'archive', title: 'Архивировано' }
         ]
       },
-      tasks: [
-        { id: 0, status: 'pending', title: 'First task', description: 'Lorem', deadline: '01.12.2021' }
-      ]
+      tasks: [],
+      archive: []
     }
   },
 
@@ -28,6 +26,12 @@ export default createStore({
         description: payload.description,
         deadline: payload.deadline
       })
+    },
+    taskChangeStatus (state, payload) {
+      state.tasks.find(obj => obj.id === payload.id).status = payload.status
+    },
+    taskToArchive (state, payload) {
+      state.tasks.unshift(state.tasks.splice(state.tasks.indexOf(obj => obj.id === payload)))
     }
   }
 

@@ -8,7 +8,6 @@ header.header.fixed.top.left.right.pt-2.pb-2.pl-5.pr-5
         router-link(
           class="header__link"
           active-class="header__link--active"
-          exact-active-class="header__link--active"
           :to="link.path"
         ) {{ link.name }}
 
@@ -16,20 +15,17 @@ header.header.fixed.top.left.right.pt-2.pb-2.pl-5.pr-5
 </template>
 
 <script>
-import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
 
 export default {
   setup () {
-    const store = useStore()
     const route = useRoute()
     const router = useRouter()
 
-    const links = store.state.staticData.routerLinks
+    const links = router.options.routes.filter(obj => obj.visible)
     const logoPush = () => {
       if (route.path !== '/') {
         router.push('/')
-        console.log('okkkk')
       }
     }
 

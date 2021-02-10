@@ -1,12 +1,21 @@
 <template lang="pug">
-.taskstatus(:class="statusClass") {{ statusTitle }}
+.taskstatus(:class="status") {{ statusTitle }}
 </template>
 
 <script>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+
 export default {
-  props: {
-    statusTitle: String,
-    statusClass: String
+  props: { status: String },
+
+  setup (props) {
+    const statusList = useStore().state.staticData.statusList
+    const statusTitle = computed(() => {
+      return statusList.find(obj => obj.alias === props.status).title
+    })
+
+    return { statusTitle }
   }
 }
 </script>

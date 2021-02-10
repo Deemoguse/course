@@ -4,17 +4,17 @@
   .card.p-3
     h2.card__title.pb-2.mb-3 🐣 Новая задача
     form.card__form(@submit.prevent="createTask")
-      .card__formrow
+      .card__form-row
         .inner__wrapper.inner__wrapper--title
           label(for="title") 🤓 Название задачи
           input(v-model="taskTitle" type="text" name="title")
         .inner__wrapper.inner__wrapper--deadline
           label(for="deadline") 🤬 Дедлайн задачи
           input(v-model="taskDeadline" type="date" :min="dateNow" name="deadline")
-      .card__formrow.card__formrow--textarea
+      .card__form-row.card__form-row--textarea
         label(for="description") 🧐 Описание задачи
         textarea(v-model="taskDescription" name="description")
-      .card__formrow
+      .card__form-row
         button.card__button(type="submit") ✅ Создать задачу
 
 //- end line
@@ -24,6 +24,7 @@
 import { ref, computed } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+import { useLocalStorage } from '../use/useLocalStorage'
 
 export default {
   setup () {
@@ -32,10 +33,10 @@ export default {
 
     const dateNow = computed(() => {
       const date = new Date()
-      const day = [date.getUTCDate()].length < 2
+      const day = date.getUTCDate() < 2
         ? `0${date.getUTCDate()}`
         : date.getUTCDate()
-      const month = [date.getUTCMonth() + 1].length < 2
+      const month = date.getUTCMonth() < 2
         ? `0${date.getUTCMonth() + 1}`
         : date.getUTCMonth() + 1
       const year = date.getUTCFullYear()
@@ -44,7 +45,7 @@ export default {
 
     const taskTitle = ref('')
     const taskDescription = ref('')
-    const taskDeadline = ref(dateNow)
+    const taskDeadline = ref('')
 
     const createTask = () => {
       store.commit('createTask', {
@@ -52,7 +53,7 @@ export default {
         description: taskDescription.value,
         deadline: taskDeadline.value
       })
-
+      useLocalStorage()
       router.push('/')
     }
 
@@ -89,7 +90,7 @@ export default {
       cursor: pointer;
     }
 
-    &__formrow {
+    &__form-row {
       display: flex;
 
       & + & {
@@ -115,7 +116,7 @@ export default {
       }
 
       & textarea {
-        min-height: 250px;
+        min-height: 175px;
         resize: none;
       }
 
