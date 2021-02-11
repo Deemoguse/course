@@ -97,7 +97,7 @@ export default {
       }
 
       & input, & textarea {
-        min-height: 30px;
+        min-height: 55px;
         padding: .5em 1.1em .6em;
         border: 1px solid #dfdfdf;
         border-radius: 3px;
