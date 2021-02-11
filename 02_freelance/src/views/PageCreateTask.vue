@@ -1,7 +1,7 @@
 <template lang="pug">
 
 .container
-  .card.p-3
+  .card
     h2.card__title.pb-2.mb-3 🐣 Новая задача
     form.card__form(@submit.prevent="createTask")
       .card__form-row
@@ -15,7 +15,10 @@
         label(for="description") 🧐 Описание задачи
         textarea(v-model="taskDescription" name="description")
       .card__form-row
-        button.card__button(type="submit") ✅ Создать задачу
+        button.button.card__button(
+          :class="{ 'button--disabled': !taskTitle || !taskDescription || !taskDeadline }"
+          type="submit"
+        ) ✅ Создать задачу
 
 //- end line
 </template>
@@ -24,12 +27,15 @@
 import { ref, computed } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
-import { useLocalStorage } from '../use/useLocalStorage'
 
 export default {
   setup () {
     const store = useStore()
     const router = useRouter()
+
+    const taskTitle = ref('')
+    const taskDescription = ref('')
+    const taskDeadline = ref('')
 
     const dateNow = computed(() => {
       const date = new Date()
@@ -43,18 +49,15 @@ export default {
       return `${year}-${month}-${day}`
     })
 
-    const taskTitle = ref('')
-    const taskDescription = ref('')
-    const taskDeadline = ref('')
-
     const createTask = () => {
-      store.commit('createTask', {
-        title: taskTitle.value,
-        description: taskDescription.value,
-        deadline: taskDeadline.value
-      })
-      useLocalStorage()
-      router.push('/')
+      if (taskTitle.value && taskDescription.value && taskDeadline.value) {
+        store.commit('createTask', {
+          title: taskTitle.value,
+          description: taskDescription.value,
+          deadline: taskDeadline.value
+        })
+        router.push('/')
+      }
     }
 
     return {
@@ -70,24 +73,10 @@ export default {
 
 <style lang="scss" scoped>
   .card {
-    border: 1px solid #dfdfdf;
-    background: #fff;
-
     &__title {
       width: 100%;
       margin-top: 0;
       border-bottom: 2px solid #dfdfdf;
-    }
-
-    &__button {
-      padding: .5em 1.1em .6em;
-      border: 1px solid #dfdfdf;
-      border-radius: 3px;
-
-      font-size: 16px;
-
-      background: transparent;
-      cursor: pointer;
     }
 
     &__form-row {

@@ -4,17 +4,29 @@ header.header.fixed.top.left.right.pt-2.pb-2.pl-5.pr-5
   h2.header__title(@click="logoPush") 😁 Tasks
   nav.header__menu
     ul.header__list
-      li.header__item(v-for="link in links" :key="link.path")
-        router-link(
-          class="header__link"
+      li.header__item
+        router-link.header__link(
           active-class="header__link--active"
-          :to="link.path"
-        ) {{ link.name }}
+          :class="routeMainPage"
+          to="/"
+        ) Список задач
+      li.header__item
+        router-link.header__link(
+          active-class="header__link--active"
+          :class="routeArchivePage"
+          to="/archive"
+        ) Архив
+      li.header__item
+        router-link.header__link(
+          active-class="header__link--active"
+          to="/createtask"
+        ) Создать задачу
 
 //- end line
 </template>
 
 <script>
+import { computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
 export default {
@@ -22,14 +34,24 @@ export default {
     const route = useRoute()
     const router = useRouter()
 
-    const links = router.options.routes.filter(obj => obj.visible)
+    const routeMainPage = computed(() => {
+      return {
+        'header__link--active': Boolean(route.params.archive) === false && route.path.indexOf('task') === 1
+      }
+    })
+    const routeArchivePage = computed(() => {
+      return {
+        'header__link--active': Boolean(route.params.archive) === true && route.path.indexOf('task') === 1
+      }
+    })
+
     const logoPush = () => {
-      if (route.path !== '/') {
+      if (route.path !== '/' && route.path !== '/tasks/') {
         router.push('/')
       }
     }
 
-    return { links, logoPush }
+    return { logoPush, routeMainPage, routeArchivePage }
   }
 }
 </script>
@@ -43,6 +65,8 @@ export default {
     border-bottom: 1px solid #dfdfdf;
 
     background: #fff;
+    box-shadow: 0px 5px 8px rgba($color: #000000, $alpha: 0.03);
+    z-index: 3;
 
     // inner header
     &__title {

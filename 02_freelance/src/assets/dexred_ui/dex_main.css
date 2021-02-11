@@ -107,6 +107,42 @@
 .ml-4 { margin-left: calc(var(--unit-margin) * 4) }
 .ml-5 { margin-left: calc(var(--unit-margin) * 5) }
 
+.card {
+  padding: 30px;
+  border: 1px solid #dfdfdf;
+  background: #fff;
+}
+
+.button {
+  padding: .5em 1.1em .6em;
+  border: 1px solid #dfdfdf;
+  border-radius: 3px;
+
+  font-size: 16px;
+
+  background: transparent;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: #f5f5f5;
+}
+
+.button--disabled {
+  border: 1px solid #c7c7c7;
+  opacity: 0.5;
+  cursor: default;
+}
+
+.button--disabled:hover {
+  background: transparent;
+}
+
+.button--disabled:active,
+.button--disabled:focus {
+  outline: none;
+}
+
 /* ------------------------------------------------
   🐱‍👤 github: https://github.com/Deemoguse/dexgrid –– ля пака шо нема (( 
   📧 email: cugune.tyan@gmail.com

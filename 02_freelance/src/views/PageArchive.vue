@@ -2,7 +2,7 @@
 
 .container
 
-  the-filter-tasks(v-if="$store.state.tasks.length" v-model="searchByStatus")
+  the-filter-tasks(v-if="$store.state.archive.length" v-model="searchByStatus")
 
   template(v-if="tasks.length")
     app-task-card(
@@ -10,7 +10,7 @@
       :task-data="task"
     )
 
-  h2(v-else).alert Список задач пуст
+  h2(v-else).alert Архив пуст
 
 //- end line
 </template>
@@ -28,8 +28,8 @@ export default {
     const searchByStatus = ref('all')
     const tasks = computed(() => {
       return searchByStatus.value === 'all'
-        ? store.state.tasks
-        : store.state.tasks.filter(tasks => tasks.status === searchByStatus.value)
+        ? store.state.archive
+        : store.state.archive.filter(tasks => tasks.status === searchByStatus.value)
     })
 
     return { tasks, searchByStatus }

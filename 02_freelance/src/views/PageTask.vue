@@ -1,40 +1,53 @@
 <template lang="pug">
 
 .container
-  .card.p-3
+  .card(:class="{ 'card--archive': $route.params.archive}")
+
+    //- header
     .card__header.pb-2.mb-3
       h2.card__title(:class="task.status") {{ task.title }}
+        span.inner(v-if="$route.params.archive") (архив)
       app-task-status(:status="task.status")
+
+    //- body
     .card__body.typography.mb-3
       p {{ task.description }}
-    .card__footer
-      .inner__wrapper
-        button.card__button(
-          v-for="button in buttons"
-          :class="{ 'card__button--disabled': button.newStatus === task.status }"
-          @click="changeStatus(task.id, task.status, button.newStatus)"
-        ) {{ button.text }}
+      p.card__deadline 🥵 Дэдлайн: {{ task.deadline }}
 
-      button.card__button(
-        :class="{ 'card__button--disabled': task.status === 'archive' }"
-        @click="changeStatus(task.id, task.status, 'archive')"
-      ) 📦 Отправить в архив
+    //- footer
+    .card__footer
+      //- if url /task/...&true
+      template(v-if="$route.params.archive")
+        .inner__wrapper
+          button.button.card__button(@click="taskToTasks(task.id)") 👼 Вернуть из архива
+          button.button.card__button(@click="removeTask(task.id)") 🔥 Удалить
+
+      //- if url /task/...
+      template(v-else)
+        .inner__wrapper
+          button.button.card__button(
+            v-for="button in buttons"
+            :class="{ 'button--disabled': button.newStatus === task.status }"
+            @click="changeStatus(task.id, task.status, button.newStatus)"
+          ) {{ button.text }}
+        button.button.card__button.archive(
+          @click="taskToArchive(task.id)"
+        ) 📦 Отправить в архив
 
 //- end line
 </template>
 
 <script>
-/* eslint-disable */
 import { computed } from 'vue'
 import { useStore } from 'vuex'
-import { useRoute } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import AppTaskStatus from '../components/AppTaskStatus'
-import { useLocalStorage } from '../use/useLocalStorage'
 
 export default {
   setup () {
     const store = useStore()
     const route = useRoute()
+    const router = useRouter()
 
     const buttons = [
       { newStatus: 'done', text: '📈 Завершить задачу' },
@@ -42,22 +55,43 @@ export default {
       { newStatus: 'cancelled', text: '❌ Отменить задачу' }
     ]
 
-    const taskId = Number(route.params.id)
+    const { id, archive } = route.params
     const task = computed(() => {
-      return store.state.tasks.find(obj => obj.id === taskId)
+      if (Boolean(archive) === false) {
+        return store.state.tasks.find(obj => obj.id === Number(id))
+      } else {
+        return store.state.archive.find(obj => obj.id === Number(id))
+      }
     })
 
     const changeStatus = (id, oldStatus, newStatus) => {
       if (newStatus !== oldStatus) {
         store.commit('taskChangeStatus', { id: id, status: newStatus })
-        useLocalStorage()
       }
+    }
+
+    const taskToArchive = id => {
+      router.push('/')
+      store.commit('taskToArchive', id)
+    }
+
+    const taskToTasks = id => {
+      router.push('/archive')
+      store.commit('taskToTasks', id)
+    }
+
+    const removeTask = id => {
+      router.push('/archive')
+      store.commit('removeTask', id)
     }
 
     return {
       task,
       buttons,
-      changeStatus
+      changeStatus,
+      taskToArchive,
+      taskToTasks,
+      removeTask
     }
   },
   components: { AppTaskStatus }
@@ -66,8 +100,13 @@ export default {
 
 <style lang="scss" scoped>
   .card {
-    border: 1px solid #dfdfdf;
-    background: #fff;
+
+    &--archive {
+      .card__title .inner {
+        margin-left: 12px;
+        opacity: 0.3;
+      }
+    }
 
     & + & {
       margin-top: 25px;
@@ -88,6 +127,13 @@ export default {
       padding-left: 8px;
       border-left: 4px solid var(--border-color);
 
+      & .card__title--archive .inner {
+        margin-left: 10px;
+        font-style: italic;
+        font-weight: 600;
+        opacity: 0.17;
+      }
+
       &.pending {
         --border-color: rgba(0,0,0,.25);
       }
@@ -100,19 +146,17 @@ export default {
       &.cancelled {
         --border-color: var(--danger-color);
       }
-      &.archive {
-        --border-color: var(--dark-color)
-      }
     }
 
     &__deadline {
       width: fit-content;
+      padding: 20px 0;
+      border-bottom: 1px solid #f0f0f0;
+      border-top: 1px solid #f0f0f0;
+      margin-top: 35px;
 
-      font-size: 13px;
+      font-size: 20px;
       font-weight: 500;
-
-      box-shadow: 0px 1px 0px currentColor;
-      opacity: 0.4;
     }
 
     &__footer {
@@ -121,27 +165,8 @@ export default {
     }
 
     &__button {
-      padding: .5em 1.1em .6em;
-      border: 1px solid #dfdfdf;
-      border-radius: 3px;
-
-      font-size: 16px;
-
-      background: transparent;
-      cursor: pointer;
-
       & + & {
         margin-left: 20px;
-      }
-
-      &--disabled {
-        border: 1px solid #c7c7c7;
-        opacity: 0.5;
-        cursor: default;
-
-        &:active, &:focus {
-          outline: none;
-        }
       }
     }
 

@@ -14,6 +14,8 @@
   text-rendering: optimizeLegibility;
 
   color: var(--global-color);
+
+  box-sizing: border-box;
 }
 
 body {

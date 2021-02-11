@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import { useLocalStorage } from '../use/useLocalStorage'
 
 export default createStore({
   state () {
@@ -12,6 +13,7 @@ export default createStore({
           { alias: 'archive', title: 'Архивировано' }
         ]
       },
+      searhBy: 'all',
       tasks: [],
       archive: []
     }
@@ -26,12 +28,28 @@ export default createStore({
         description: payload.description,
         deadline: payload.deadline
       })
+      useLocalStorage()
     },
     taskChangeStatus (state, payload) {
       state.tasks.find(obj => obj.id === payload.id).status = payload.status
+      useLocalStorage()
     },
     taskToArchive (state, payload) {
-      state.tasks.unshift(state.tasks.splice(state.tasks.indexOf(obj => obj.id === payload)))
+      const id = state.tasks.indexOf(obj => obj.id === payload)
+      const obj = state.tasks.splice(id)
+      state.archive.push({ ...obj[0] })
+      useLocalStorage()
+    },
+    taskToTasks (state, payload) {
+      const id = state.archive.indexOf(obj => obj.id === payload)
+      const obj = state.archive.splice(id)
+      state.tasks.unshift({ ...obj[0] })
+      useLocalStorage()
+    },
+    removeTask (state, payload) {
+      const id = state.archive.indexOf(obj => obj.id === payload)
+      state.archive.splice(id)
+      useLocalStorage()
     }
   }
 
