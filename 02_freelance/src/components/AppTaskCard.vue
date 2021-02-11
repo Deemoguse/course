@@ -10,10 +10,7 @@
   //- body
   .card__body.typography.mb-3
     p {{ description.slice(0, 200) }}
-      span.moreinfo(
-        v-if="description.length > 199"
-        @click="$router.push(`/task/${id}`)"
-      ) ...
+      span.moreinfo(v-if="description.length > 199") ...
 
   //- footer
   .card__footer
